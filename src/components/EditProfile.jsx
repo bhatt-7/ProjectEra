@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom"
  import { updateProfile } from "../services/operations/authAPI"
 
 
-const genders = ["Male", "Female", "Non-Binary", "Prefer not to say", "Other"]
+const genders = ["Male", "Female"]
 
 export default function EditProfile() {
   const { user } = useSelector((state) => state.auth)

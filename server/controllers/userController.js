@@ -22,7 +22,7 @@ function generateOTP() {
 exports.sendOTP = async (req, res) => {
     try {
         const { email } = req.body;
-        console.log(" hi ",email)
+        console.log(" hi ", email)
 
         const checkUserPresent = await User.findOne({ email });
 
@@ -86,8 +86,8 @@ exports.signup = async (req, res) => {
         }
 
         // const response = await OTPVerification.findOne({ email }).sort({ createdAt: -1 }).limit(1);
-        const resp=await OTPVerification.find({email}).sort({createdAt:-1}).limit(1)
-        console.log("respo ",resp)
+        const resp = await OTPVerification.find({ email }).sort({ createdAt: -1 }).limit(1)
+        console.log("respo ", resp)
         // console.log(`response ye rha ${response}`);
         console.log(otp);
         console.log(resp[0]?.otp);
@@ -103,11 +103,11 @@ exports.signup = async (req, res) => {
         // Hash the password
         const hashedPassword = await bcrypt.hash(password, 10);
         const profileDetails = await Profile.create({
-			gender: null,
-			dateOfBirth: null,
-			about: null,
-			contactNumber: null,
-		});
+            gender: null,
+            dateOfBirth: null,
+            about: null,
+            contactNumber: null,
+        });
 
         // Create a new user
         const newUser = new User({
@@ -115,7 +115,7 @@ exports.signup = async (req, res) => {
             lastName,
             email,
             password: hashedPassword,
-            additionalDetails:profileDetails._id,
+            additionalDetails: profileDetails._id,
             image: `https://api.dicebear.com/5.x/initials/svg?seed=${firstName}${lastName}`,
             followers: []
 
@@ -204,7 +204,7 @@ exports.verifyOtp = async (req, res) => {
 
     try {
         // Check if OTP is valid
-        const otpVerification = await OTPVerification.findOne({ email, otp,password, verified: false }).populate('user');
+        const otpVerification = await OTPVerification.findOne({ email, otp, password, verified: false }).populate('user');
         if (otpVerification) {
             // Update OTP verification status
             otpVerification.verified = true;
@@ -245,32 +245,32 @@ exports.getAllUsers = async (req, res) => {
 
 
 exports.updateProfile = async (req, res) => {
-	try {
-		const { dateOfBirth = "", about = "", contactNumber } = req.body;
-		const id = req.user.id;
+    try {
+        const { dateOfBirth = "", about = "", contactNumber } = req.body;
+        const id = req.user.id;
 
-		// Find the profile by id
-		const userDetails = await User.findById(id);
-		const profile = await Profile.findById(userDetails.additionalDetails);
+        // Find the profile by id
+        const userDetails = await User.findById(id);
+        const profile = await Profile.findById(userDetails.additionalDetails);
 
-		// Update the profile fields
-		profile.dateOfBirth = dateOfBirth;
-		profile.about = about;
-		profile.contactNumber = contactNumber;
+        // Update the profile fields
+        profile.dateOfBirth = dateOfBirth;
+        profile.about = about;
+        profile.contactNumber = contactNumber;
 
-		// Save the updated profile
-		await profile.save();
+        // Save the updated profile
+        await profile.save();
 
-		return res.json({
-			success: true,
-			message: "Profile updated successfully",
-			profile,
-		});
-	} catch (error) {
-		console.log(error);
-		return res.status(500).json({
-			success: false,
-			error: error.message,
-		});
-	}
+        return res.json({
+            success: true,
+            message: "Profile updated successfully",
+            profile,
+        });
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({
+            success: false,
+            error: error.message,
+        });
+    }
 };

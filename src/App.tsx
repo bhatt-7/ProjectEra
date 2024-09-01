@@ -28,18 +28,20 @@ function App() {
         {/* <Route path='/verify-email' element={<VerifyEmail/>} ></Route> */}
         <Route path="/login" element={<Login />}></Route>
         <Route path="/signup" element={<Signup />}></Route>
+        <Route
+          path="/otp-verification"
+          element={<OtpVerificationForm />}
+        />{" "}
         <Route path="/friends" element={<FriendRequest />}></Route>
-        <Route path="/friends-connect" element={<FriendConnect/>}></Route>
+        <Route path="/friends-connect" element={<FriendConnect />}></Route>
         <Route path="/dashboard/my-profile" element={<Myprofile />}></Route>
         <Route path="/project" element={<ProjectList />}></Route>
-        <Route path="/contact-us" element={<Contact/>}></Route>
-        <Route path="/about" element={<About/>}></Route>
+        <Route path="/contact-us" element={<Contact />}></Route>
+        <Route path="/about" element={<About />}></Route>
         <Route
           path="/dashboard/create-project"
           element={<CreateProject />}
         ></Route>
-        <Route path="/otp-verification" element={<OtpVerificationForm />} />{" "}
-        {/* Add the route for OTP verification */}
         <Route path="/success" element={<SuccessPage />} />
       </Routes>
 
