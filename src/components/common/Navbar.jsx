@@ -61,6 +61,13 @@ function Navbar() {
                     </Link>
                 )}
                 {token !== null && <ProfileDrop />}
+                {token !== null && (
+                    <button>
+                        <a href="https://conferrenco.onrender.com/" target='_blank'>
+                            Discuss
+                        </a>
+                    </button>
+                )}
             </div>
         </div>
     );
