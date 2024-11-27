@@ -14,7 +14,6 @@ const morgan = require('morgan')
 // Connect to MongoDB
 connectDB();
 
-// Middleware
 app.use(express.json());
 app.use(cookieParser());
 app.use(
