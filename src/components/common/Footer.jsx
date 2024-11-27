@@ -1,13 +1,14 @@
 import React from 'react'
 import logo from '../../assets/logo.png'
+import './Footer.css'
 
 function Footer() {
     return (
-        <div className="">
+        <div className="Footer">
             <div className=" bg-gray-900">
                 <div className=" max-w-2xl mx-auto text-white py-0">
                     <div className="text-center py-5">
-                        <h3 className="text-3xl mb-3">
+                        <h3 className="text-2xl mb-3">
                             Subscribe to our Project Management App </h3>
                         <p>ProjectEra: Elevate Your Project to the Next Era </p>
 

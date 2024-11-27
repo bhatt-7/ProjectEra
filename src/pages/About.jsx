@@ -9,7 +9,6 @@ const About = () => {
         <CardHoverEffectDemo/>
         </div>
     </div>
-    // hello
   )
 }
 

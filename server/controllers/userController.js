@@ -5,7 +5,6 @@ const User = require('../models/User');
 const OTPVerification = require('../models/OTPVerification');
 const nodemailer = require('nodemailer');
 const Profile = require("../models/Profile")
-
 const transporter = nodemailer.createTransport({
     service: 'Gmail',
     auth: {
@@ -75,25 +74,17 @@ exports.signup = async (req, res) => {
         console.log(otp)
         console.log(firstName)
         console.log(req.body)
-        // Check if passwords match
         if (password !== confirmPassword) {
             return res.status(400).json({ message: 'Passwords do not match' });
         }
 
-        // Check if user or email already exists
-        const existingUser = await User.findOne({ $or: [{ firstName }, { email }] });
+        const existingUser = await User.findOne({ email });
         if (existingUser) {
             return res.status(400).json({ message: 'Username or email already exists' });
         }
 
-        // const response = await OTPVerification.findOne({ email }).sort({ createdAt: -1 }).limit(1);
         const resp = await OTPVerification.find({ email }).sort({ createdAt: -1 }).limit(1)
-        console.log("respo ", resp)
-        // console.log(`response ye rha ${response}`);
-        console.log(otp);
-        console.log(resp[0]?.otp);
-
-
+        console.log(resp.data)
         if (otp !== resp[0]?.otp) {
             return res.status(400).json({
                 success: false,
@@ -101,7 +92,6 @@ exports.signup = async (req, res) => {
             })
         }
 
-        // Hash the password
         const hashedPassword = await bcrypt.hash(password, 10);
         const profileDetails = await Profile.create({
             gender: null,
@@ -131,6 +121,8 @@ exports.signup = async (req, res) => {
         res.status(500).json({ message: 'Internal server error' });
     }
 };
+
+
 exports.login = async (req, res) => {
     try {
         //get data from req body

@@ -3,29 +3,29 @@ import { getAllProjects } from '../services/operations/projectAPI'
 
 const Projects = () => {
 
-    const [projects,setProjects] = useState([]);
+    const [projects, setProjects] = useState([]);
 
-    useEffect(()=>{
-        const fetchProjects = async()=>{
+    useEffect(() => {
+        const fetchProjects = async () => {
             const result = await getAllProjects();
-            if(result){
+            if (result) {
                 setProjects(result);
             }
         }
         fetchProjects();
-    },[])
+    }, [])
     console.log(projects)
-  return (
-    <div className='text-black'>
-        <p>Projects</p>
+    return (
+        <div className='text-black flex flex-col'>
+            <p>Projects</p>
 
-        {
-            projects.map((items)=(
-                <p>{items.name}</p>
-            ))
-        }
-    </div>
-  )
+            {
+                projects.map((items) = (
+                    <p>{items.name}</p>
+                ))
+            }
+        </div>
+    )
 }
 
 export default Projects

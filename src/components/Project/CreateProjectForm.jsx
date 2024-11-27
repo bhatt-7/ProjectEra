@@ -21,30 +21,21 @@ const CreateProjectForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
     const formData = new FormData();
     formData.append('name', name);
     formData.append('description', description);
     files.forEach((file) => {
       formData.append('files', file);
     });
-
-    // Log formData entries to ensure files are appended
-    for (let pair of formData.entries()) {
-      console.log(`${pair[0]}: ${pair[1]}`);
-    }
-
-    dispatch(uploadProject(formData, navigate));
-
+    console.log(formData)
+    dispatch(uploadProject(formData,navigate));
     Swal.fire({
       title: "Good job!",
-      text: "Project Published",
+      text: "Project Published ",
       icon: "success"
     });
-
-    navigate("/project");
+    navigate("/project")
   };
-
 
   return (
     <form onSubmit={handleSubmit} className="max-w-md mx-auto bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
@@ -89,8 +80,8 @@ const CreateProjectForm = () => {
       <div className="flex items-center justify-between">
         <button
           className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-          type="submit"
-          onClick={() => { "" }}
+          type="submit" 
+onClick={()=>{ "" }}
         >
           Create Project
         </button>

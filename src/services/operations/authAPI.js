@@ -1,45 +1,51 @@
 import axios from "axios";
-import { setLoading, setToken, setUser,setSignupData } from "../../slices/authSlice";
+import { setLoading, setToken, setUser, setSignupData } from "../../slices/authSlice";
 import { apiConnector } from "../apiConnector";
 import toast from "react-hot-toast";
 const OTP_API = "http://localhost:5000/api/users/send-otp";
 const SIGNUP_API = "http://localhost:5000/api/users/signup";
 const LOGIN_API = "http://localhost:5000/api/users/login";
-const UPDATE_PROFILE_API= "http://localhost:5000/api/users/updateProfile"
+const UPDATE_PROFILE_API = "http://localhost:5000/api/users/updateProfile"
 export const sendOtp = (email) => async () => {
     console.log(email);
     try {
         const response = await axios.post(OTP_API, { email });
+        console.log("otp sent")
         return response.data;
     } catch (error) {
         console.error("Error sending OTP", error);
     }
 };
 
-export async function verifyOtp(firstName,
+export async function verifyOtp(
+    firstName,
     lastName,
     email,
     password,
-    confirmPassword, otp)
-{    console.log("data ",firstName,
-lastName,
-email,
-password,
-confirmPassword, otp)
+    confirmPassword, otp) {
+    console.log("data ",
+        firstName,
+        lastName,
+        email,
+        password,
+        confirmPassword, 
+        otp)
     try {
-        const response = await axios.post(SIGNUP_API, {firstName,
+        const response = await axios.post(SIGNUP_API, {
+            firstName,
             lastName,
             email,
             password,
-            confirmPassword, otp}, { withCredentials: true });
-        console.log("Server response:", response.data);  // Log server response
+            confirmPassword, otp
+        }, { withCredentials: true });
+        console.log("Server response:", response.data);
         if (response.status !== 200) {
             throw new Error(response.data.message || "Failed to verify OTP");
         }
         return response.data;
     } catch (error) {
         console.error("Error verifying OTP", error);
-        throw error;  
+        throw error;
     }
 }
 
@@ -119,30 +125,30 @@ export function updateProfile(token, formData) {
     console.log(formData)
     console.log(token)
     return async (dispatch) => {
-      const toastId = toast.loading("Loading...")
-      console.log(formData)
-      try {
-        const response = await apiConnector("PUT", UPDATE_PROFILE_API, formData, {
-          Authorisation: `Bearer ${token}`,
-        })
-        console.log("UPDATE_PROFILE_API API RESPONSE............", response)
-  
-        console.log(response)
-  
-        if (!response.data.success) {
-          throw new Error(response.data.message)
+        const toastId = toast.loading("Loading...")
+        console.log(formData)
+        try {
+            const response = await apiConnector("PUT", UPDATE_PROFILE_API, formData, {
+                Authorisation: `Bearer ${token}`,
+            })
+            console.log("UPDATE_PROFILE_API API RESPONSE............", response)
+
+            console.log(response)
+
+            if (!response.data.success) {
+                throw new Error(response.data.message)
+            }
+            // const userImage = response.data.updatedUserDetails.image
+            //   ? response.data.updatedUserDetails.image
+            //   : `https://api.dicebear.com/5.x/initials/svg?seed=${response.data.updatedUserDetails.firstName} ${response.data.updatedUserDetails.lastName}`
+            // dispatch(
+            //   setUser({ ...response.data.updatedUserDetails, image: userImage })
+            // )
+            toast.success("Profile Updated Successfully")
+        } catch (error) {
+            console.log("UPDATE_PROFILE_API API ERROR............", error)
+            toast.error("Could Not Update Profile")
         }
-        // const userImage = response.data.updatedUserDetails.image
-        //   ? response.data.updatedUserDetails.image
-        //   : `https://api.dicebear.com/5.x/initials/svg?seed=${response.data.updatedUserDetails.firstName} ${response.data.updatedUserDetails.lastName}`
-        // dispatch(
-        //   setUser({ ...response.data.updatedUserDetails, image: userImage })
-        // )
-        toast.success("Profile Updated Successfully")
-      } catch (error) {
-        console.log("UPDATE_PROFILE_API API ERROR............", error)
-        toast.error("Could Not Update Profile")
-      }
-      toast.dismiss(toastId)
+        toast.dismiss(toastId)
     }
-  }
+}

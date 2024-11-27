@@ -47,7 +47,7 @@ function SignupForm() {
 
     dispatch(sendOtp(formData.email))
       .then(() => {
-        console.log("email ", formData.email)
+        console.log("email ",formData.email)
         navigate("/otp-verification")
       })
       .catch((error) => {

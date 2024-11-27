@@ -24,8 +24,8 @@ app.use(
     })
 )
 
-app.use(helmet())
-app.use(morgan("common"))
+// app.use(helmet())
+// app.use(morgan("common"))
 
 // Routes
 app.use('/api/users', userRoutes); // Mount the user routes under /api/users
