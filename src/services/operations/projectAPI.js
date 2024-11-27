@@ -3,12 +3,11 @@ import { setProjectData, setLoading, setError, deleteProject } from "../../slice
 import { useNavigate } from "react-router-dom";
 const GET_ALL_PROJECTS_API = "http://localhost:5000/api/users/user-projects";
 export function uploadProject(projectData, navigate) {
+  const UPLOAD_PROJECT_API = "http://localhost:5000/api/users/projects";
 
-  const UPLOAD_PROJECT_API = "http://localhost:5000/api/users/projects"
   return async (dispatch) => {
     dispatch(setLoading(true));
     try {
-      // Assuming you have an API endpoint for uploading projects
       const response = await apiConnector("POST", UPLOAD_PROJECT_API, projectData);
 
       console.log("UPLOAD PROJECT API RESPONSE:", response);
@@ -17,17 +16,16 @@ export function uploadProject(projectData, navigate) {
         throw new Error(response.data.message);
       }
 
-      // Assuming the API returns the uploaded project data
       dispatch(setProjectData(response.data.project));
-      navigate("/login")
-      // Handle any additional logic after successfully uploading the project
+      navigate("/login"); // You might want to navigate to the project page instead of login
     } catch (error) {
       console.error("UPLOAD PROJECT API ERROR:", error);
-      // Dispatch an action to set an error state if needed
+      dispatch(setError(error.message)); // Set error state
     }
     dispatch(setLoading(false));
   };
 }
+
 export const getAllProjects = async () => {
   let result = [];
   try {

@@ -5,6 +5,7 @@ const User = require('../models/User');
 const OTPVerification = require('../models/OTPVerification');
 const nodemailer = require('nodemailer');
 const Profile = require("../models/Profile")
+
 const transporter = nodemailer.createTransport({
     service: 'Gmail',
     auth: {

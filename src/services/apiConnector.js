@@ -2,16 +2,16 @@ import axios from "axios"
 
 export const axiosInstance = axios.create({});
 
-export const apiConnector = (method, url, bodyData, headers, params) => {
-    console.log("ye hai",url);
+export const apiConnector = (method, url, bodyData = null, headers = null, params = null) => {
+    console.log("ye hai", url);
     return axiosInstance({
-        method:`${method}`,
-        url:`${url}`,
-        data: bodyData ? bodyData : null,
-        headers: headers ? headers: null,
-        params: params ? params : null,
-        
+        method: `${method}`,
+        url: `${url}`,
+        data: bodyData,
+        headers,
+        params,
+
     });
-    
+
 }
-axiosInstance.defaults.withCredentials=true;
+axiosInstance.defaults.withCredentials = true;
